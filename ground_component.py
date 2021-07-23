@@ -11,6 +11,4 @@ class GroundComponent(bge.types.KX_PythonComponent):
 
     def update(self):
         if self.mouse_sensor.hitObject:
-            self.object.position = Vector(
-                [self.mouse_sensor.hitPosition.x, self.mouse_sensor.hitPosition.y, self.object.position.z]
-            )
+            self.object.position = self.mouse_sensor.hitPosition
