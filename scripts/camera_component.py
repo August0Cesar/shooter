@@ -1,7 +1,7 @@
 import bge
 from collections import OrderedDict
 
-ZOOM_VALUE = 5
+ZOOM_VALUE = 10
 
 
 class CameraComponent(bge.types.KX_PythonComponent):
@@ -14,7 +14,7 @@ class CameraComponent(bge.types.KX_PythonComponent):
 
     def update(self):
         if self.mouse_up.positive:
-            if self.object.lens <= 21:
+            if self.object.lens <= 18:
                 return
             self.object.lens -= ZOOM_VALUE
         
