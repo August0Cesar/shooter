@@ -22,4 +22,5 @@ class Timer:
 
         minutes = int(seconds / 60)
         seconds -= minutes * 60
-        return f'{minutes}m {seconds}s {milisegundos}ms'
+        # return f'{minutes}m {seconds}s {milisegundos}ms'
+        return f'{minutes}:{seconds}'
