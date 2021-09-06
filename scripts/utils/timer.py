@@ -23,4 +23,12 @@ class Timer:
         minutes = int(seconds / 60)
         seconds -= minutes * 60
         # return f'{minutes}m {seconds}s {milisegundos}ms'
-        return f'{minutes}:{seconds}'
+        if minutes < 10:
+            minutes_str = f'0{minutes}'
+        else:
+            minutes_str = str(minutes)
+        if seconds < 10:
+            seconds_str = f'0{seconds}'
+        else:
+            seconds_str = str(seconds)
+        return f'{minutes_str}:{seconds_str}'

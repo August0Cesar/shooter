@@ -27,17 +27,17 @@ class SimpleLayout(bgui.bge_utils.Layout):
         self.win_label.colors = [(0, 0, 0, 0.3) for i in range(4)]
 
         # A Label widget
-        self.lbl = bgui.Label(self.win_label, text=f'Tempo restante {0}',
+        self.lbl = bgui.Label(self.win_label, text=f'Tempo atual {0}',
                               pt_size=25, options=bgui.BGUI_CENTERX,
                               pos=[0, 0.3])
         
-        self.image_person = bgui.Image(self, 'textures/face_player_image_small.png', size=[.08, .095], pos=[0.000001, 0.002],
-			options = bgui.BGUI_DEFAULT
-        )
+        # self.image_person = bgui.Image(self, 'textures/face_player_image_small.png', size=[.08, .095], pos=[0.000001, 0.002],
+		# 	options = bgui.BGUI_DEFAULT
+        # )
     
     def update(self):
         # int(self.data["player"]["timer"])
-        self.lbl.text = f'Tempo restante {self.timer.__str__()}'
+        self.lbl.text = f'Tempo atual {self.timer.__str__()}'
 
 
 def main(cont):
