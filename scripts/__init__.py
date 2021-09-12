@@ -6,3 +6,4 @@ from .goop.goop_collide_component import GoopCollideComponent
 from .player.life_bar_component import LifeBarComponent
 from .ui.modal import ModalComponent
 from .utils.timer import Timer
+from .ui.time_label_bgui import main as ui_time_main, update as ui_time_update

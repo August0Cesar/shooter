@@ -10,6 +10,6 @@ class TargetComponent(bge.types.KX_PythonComponent):
         self.mouse_sensor = self.object.sensors["Mouse"]
 
     def update(self):
-        if self.mouse_sensor.hitObject:
+        if self.object["active"] and self.mouse_sensor.hitObject:
             self.object.position = self.mouse_sensor.hitPosition
             self.object.alignAxisToVect(self.mouse_sensor.hitNormal)

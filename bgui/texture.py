@@ -6,9 +6,7 @@ try:
 	from bge import texture
 	import aud
 	USING_BGE_TEXTURE = True
-	print("USING_BGE_TEXTURE = True")
 except ImportError as e:
-	print("Aqui gl_utils "+ e)
 	from PyQt4 import QtOpenGL, QtGui
 	USING_BGE_TEXTURE = False
 

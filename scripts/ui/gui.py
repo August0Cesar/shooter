@@ -3,7 +3,7 @@
 from collections import OrderedDict
 
 # gui.GUIComponent
-# import bge
+import bge
 import bgui
 import bgui.bge_utils
 
