@@ -8,11 +8,6 @@ from collections import OrderedDict
 TIME_WAIT_FOR_PATROL = 240
 TIME_WAIT_FOR_ATTACK = 160
 
-if not hasattr(bge, "__component__"):
-    global scene
-    scene = bge.logic.getCurrentScene()
-
-
 class GoopComponent(bge.types.KX_PythonComponent):
 
     args = OrderedDict([
@@ -22,7 +17,7 @@ class GoopComponent(bge.types.KX_PythonComponent):
     ])
 
     def start(self, args):
-       
+        scene = bge.logic.getCurrentScene()
         self.enemy_state = {
             "Idle": self.__idle,
             "Patrol": self.__patrol,
@@ -40,7 +35,6 @@ class GoopComponent(bge.types.KX_PythonComponent):
         self.timer_wait_patrol = 0
 
         self.player = scene.objects[args["Player"]]
-        # breakpoint()
         self.armature = self.object.childrenRecursive["arm_goop"]
         self.mesh_goop_death = self.object.childrenRecursive["mesh_goop_death"]
         self.mesh_goop = self.object.childrenRecursive["mesh_goop"]
@@ -65,11 +59,10 @@ class GoopComponent(bge.types.KX_PythonComponent):
             self.object.endObject()
 
     def __follow(self):
-        player = scene.objects[self.player.name]
+        player = self.object.scene.objects[self.player.name]
         if self.object.getDistanceTo(player) <= 2.5:
             self.current_enemy_state = "Attack"
 
-        # player = scene.objects["cube_player_controller"]
         direction = player.worldPosition - self.object.worldPosition
         self.fisic_character.walkDirection = direction * self.speed
         self.follow_direction(self.fisic_character.walkDirection)
@@ -101,7 +94,7 @@ class GoopComponent(bge.types.KX_PythonComponent):
             self.timer_wait_patrol = 0
 
     def __atack(self):
-        player = scene.objects[self.player.name]
+        player = self.object.scene.objects[self.player.name]
         self.__add_collide_attack()
         animate(armature=self.armature, name="idle_goop",
                 start_frame=1, end_frame=20)
@@ -125,9 +118,9 @@ class GoopComponent(bge.types.KX_PythonComponent):
             self.object.alignAxisToVect([0, 0, 1], 2, 1)
 
     def is_near_player(self) -> bool:
-        if not self.player.name in scene.objects:
+        if not self.player.name in self.object.scene.objects:
             return False
-        player = scene.objects[self.player.name]
+        player = self.object.scene.objects[self.player.name]
         return self.object.getDistanceTo(player) < 5
 
     def __add_collide_attack(self):

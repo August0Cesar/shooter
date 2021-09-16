@@ -1,3 +1,4 @@
+from bge.logic import restartGame
 from bgui.widget import BGUI_CACHE, BGUI_CENTERED, BGUI_CENTERX, BGUI_CENTERY
 from scripts import Timer
 
@@ -13,6 +14,7 @@ class SimpleLayout(bgui.bge_utils.Layout):
         self.data = data
         self.timer = Timer()
         self.modal_victory = []
+        self.restartScene = False
 
         # Add widgets here
         # Use a frame to store all of our widgets
@@ -35,21 +37,34 @@ class SimpleLayout(bgui.bge_utils.Layout):
                               pos=[0, 0.3])
         ############### Win Label ###############
 
+
+        self.btn_again = bgui.FrameButton(
+            self.frame, text='Again', size=[0.1, 0.1], pos=[0.38, 0.5], options=bgui.BGUI_CENTERY)
+        self.btn_continue = bgui.FrameButton(
+            self.frame, text='Continue', size=[0.1, 0.1], pos=[0.52, 0.5], options=bgui.BGUI_CENTERY)
+        
+        self.btn_again.on_click = self.restartScenes
+
         self.modal_victory.append(bgui.Label(self.win, text=f'Vitória', sub_theme="Victory",
             options=bgui.BGUI_CENTERX, pos=[0.5, 0.6]))
-        self.modal_victory.append(bgui.FrameButton(self.frame, text='Again', size=[0.1, 0.1],
-            pos=[0.38, 0.5], options=bgui.BGUI_CENTERY))
-        self.modal_victory.append(bgui.FrameButton(self.frame, text='Continue', size=[0.1, 0.1],
-            pos=[0.52, 0.5], options=bgui.BGUI_CENTERY))
+        self.modal_victory.append(self.btn_again)
+        self.modal_victory.append(self.btn_continue)
         for widget in self.modal_victory:
             widget.visible = False
 
     def update(self):
         self.lbl.text = f'Tempo Atual {self.timer.__str__()}'
         if self.timer.get() > 20:
+            self.timer.stop = True
             self.data["player"]["victory"] = True
             for widget in self.modal_victory:
                 widget.visible = True
+    
+    def restartScenes(self, widget):
+        if not self.restartScene:
+            self.restartScene = True
+            for scene in bge.logic.getSceneList():
+                scene.restart()
 
 
 def main(cont):

@@ -3,9 +3,24 @@ import time
 
 class Timer:
     def __init__(self, value=0):
+        self._stop = False
+        self._current_time = None
         self.start = time.time()
         self.set(value)
     
+    @property
+    def current_time(self):
+        return int(self._current_time)
+
+    @property
+    def stop(self):
+        return  self._stop
+
+    @stop.setter
+    def stop(self, stop):
+         self._stop = stop
+
+
     def reset(self):
         self.set(0)
 
@@ -13,12 +28,14 @@ class Timer:
         self.start = time.time() - value
 
     def get(self) -> float:
-        return time.time() - self.start
+        if not  self._stop:
+            self._current_time = time.time() - self.start
+        return self._current_time
     
     def __str__(self):
         value = self.get()
         seconds = int(value)
-        milisegundos = int((value - seconds) * 1000)
+        # milisegundos = int((value - seconds) * 1000)
 
         minutes = int(seconds / 60)
         seconds -= minutes * 60
