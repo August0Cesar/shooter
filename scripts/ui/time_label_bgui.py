@@ -21,32 +21,45 @@ class SimpleLayout(bgui.bge_utils.Layout):
         self.frame = bgui.Frame(self, border=0)
         self.frame.colors = [(0, 0, 0, 0) for i in range(4)]
 
-        # A themed frame
-        self.win = bgui.Frame(self, size=[0.6, 0.8], border=0,
-                              options=bgui.BGUI_DEFAULT | bgui.BGUI_CENTERED)
-        self.win.colors = [(0, 0, 0, 0) for i in range(4)]    
+            
 
-        ############### Win Label ###############
-        self.win_label = bgui.Frame(self, size=[0.2, 0.05], pos=[0, 0.04],
+        
+        self.frame_time = bgui.Frame(self, size=[0.2, 0.05], pos=[0, 0.04],
             options=bgui.BGUI_CENTERX)
-        self.win_label.colors = [(0, 0, 0, 0.3) for i in range(4)]
+        self.frame_time.colors = [(0, 0, 0, 0.3) for i in range(4)]
 
         # A Label Current Time
-        self.lbl = bgui.Label(self.win_label, text='',
+        self.lbl = bgui.Label(self.frame_time, text='',
                               pt_size=25, options=bgui.BGUI_CENTERX,
                               pos=[0, 0.3])
-        ############### Win Label ###############
+        
 
+        self.win = bgui.Frame(self, size=[0.4, 0.4], pos=[0, 0.], border=1,
+            options=bgui.BGUI_CENTERX | bgui.BGUI_CENTERED)
+        self.win.colors = [(1, .655, .235, 1) for i in range(4)]
+
+        self.win_title = bgui.Frame(self.win, size=[1, 0.1], pos=[0, 1], border=1,
+            options=bgui.BGUI_CENTERX)
+        self.win_title.colors = [(1, 150, .235, 1) for i in range(4)]
+
+        self.label_victory = bgui.Label(self.win_title, text=f'Vitória', sub_theme="Victory",
+            options=bgui.BGUI_CENTERX, pos=[0, 0.2])
 
         self.btn_again = bgui.FrameButton(
-            self.frame, text='Again', size=[0.1, 0.1], pos=[0.38, 0.5], options=bgui.BGUI_CENTERY)
+            self.win, text='Again', size=[0.18, 0.10], pos=[0.3, 0.2])
+        self.btn_again.label.options = bgui.BGUI_CENTERX   
+        self.btn_again.label.position=[0, 0.3]
         self.btn_continue = bgui.FrameButton(
-            self.frame, text='Continue', size=[0.1, 0.1], pos=[0.52, 0.5], options=bgui.BGUI_CENTERY)
+            self.win, text='Continue', size=[0.18, 0.10], pos=[0.6, 0.2], )
+        self.btn_continue.label.options = bgui.BGUI_CENTERX   
+        self.btn_continue.label.position=[0, 0.3]
         
         self.btn_again.on_click = self.restartScenes
 
-        self.modal_victory.append(bgui.Label(self.win, text=f'Vitória', sub_theme="Victory",
-            options=bgui.BGUI_CENTERX, pos=[0.5, 0.6]))
+        self.modal_victory.append(self.label_victory)
+        
+        self.modal_victory.append(self.win)
+        self.modal_victory.append(self.win_title)
         self.modal_victory.append(self.btn_again)
         self.modal_victory.append(self.btn_continue)
         for widget in self.modal_victory:
@@ -54,7 +67,7 @@ class SimpleLayout(bgui.bge_utils.Layout):
 
     def update(self):
         self.lbl.text = f'Tempo Atual {self.timer.__str__()}'
-        if self.timer.get() > 20:
+        if self.timer.get() > 12:
             self.timer.stop = True
             self.data["player"]["victory"] = True
             for widget in self.modal_victory:
