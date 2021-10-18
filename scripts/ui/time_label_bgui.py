@@ -1,3 +1,4 @@
+import os
 from bge.logic import restartGame
 from bgui.widget import BGUI_CACHE, BGUI_CENTERED, BGUI_CENTERX, BGUI_CENTERY
 from scripts import Timer
@@ -82,9 +83,10 @@ class SimpleLayout(bgui.bge_utils.Layout):
 
 def main(cont):
     own = cont.owner
+    # print(own.name)
 
     if 'sys' not in own:
-        own['sys'] = bgui.bge_utils.System('bgui/themes/default')
+        own['sys'] = bgui.bge_utils.System(os.getcwd() + '/shooter/themes/default')
         own['sys'].load_layout(SimpleLayout, {"player": own})
     else:
         own['sys'].run()
