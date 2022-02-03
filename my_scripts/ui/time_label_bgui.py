@@ -1,7 +1,7 @@
 import os
 from bge.logic import restartGame
 from bgui.widget import BGUI_CACHE, BGUI_CENTERED, BGUI_CENTERX, BGUI_CENTERY
-from scripts import Timer
+from my_scripts.utils.timer import Timer
 
 import bgui
 import bgui.bge_utils
@@ -68,11 +68,11 @@ class SimpleLayout(bgui.bge_utils.Layout):
 
     def update(self):
         self.lbl.text = f'Tempo Atual {self.timer.__str__()}'
-        if self.timer.get() > 12:
-            self.timer.stop = True
-            self.data["player"]["victory"] = True
-            for widget in self.modal_victory:
-                widget.visible = True
+        # if self.timer.get() > 12:
+        #     self.timer.stop = True
+        #     self.data["player"]["victory"] = True
+        #     for widget in self.modal_victory:
+        #         widget.visible = True
     
     def restartScenes(self, widget):
         if not self.restartScene:

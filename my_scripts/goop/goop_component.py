@@ -1,7 +1,7 @@
 import bge
 import math
 from random import randint, random, choice
-from scripts.utils.animate import animate
+from my_scripts.utils.animate import animate
 from mathutils import Vector
 from collections import OrderedDict
 
